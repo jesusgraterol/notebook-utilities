@@ -1,5 +1,5 @@
 <a href="https://www.kaggle.com/code/jesusgraterol/utilities" target="_blank">
-  <img align="left" alt="Kaggle" title="Open in Kaggle" src="https://kaggle.com/static/images/open-in-kaggle.svg">
+  <img align="left" alt="Kaggle" title="Open in Kaggle" src="./img/open-in-kaggle.svg">
 </a><br>
 
 # Notebook Utilities
