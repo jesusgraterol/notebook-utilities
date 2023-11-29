@@ -1,10 +1,11 @@
 <a href="https://www.kaggle.com/code/jesusgraterol/utilities" target="_blank">
   <img align="left" alt="Kaggle" title="Open in Kaggle" src="https://kaggle.com/static/images/open-in-kaggle.svg">
-</a><br><br>
+</a><br>
 
 # Notebook Utilities
 
-The purpose of this Notebook/Utility Script is to provide a series of helper functions that will simplify the development of more complex projects.
+The purpose of this Notebook/Utility Script is to provide a series of helper functions that will 
+simplify the development of more complex projects.
 
 
 ```python
@@ -25,7 +26,11 @@ import mplfinance as mpl
 ## Number Helpers
 
 ```python
-def calculate_percentage_change(old_value: float, new_value: float, precision: int = 2) -> float:
+def calculate_percentage_change(
+  old_value: float, 
+  new_value: float, 
+  precision: int = 2
+) -> float:
     """Calculates the change in % a number has experienced.
     
     Args:
@@ -56,43 +61,7 @@ def calculate_percentage_change(old_value: float, new_value: float, precision: i
         decrease: float = old_value - new_value
         change = -((decrease / old_value) * 100)
         
-    # Finally, return the % change. Note that a value cannot experience a decrease larger than 100%
-    return round(change if change >=-100 else -100, precision)
-```
-
-```python
-def calculate_percentage_change(old_value: float, new_value: float, precision: int = 2) -> float:
-    """Calculates the change in % a number has experienced.
-    
-    Args:
-        old_value: float
-            The original value prior to experiencing any changes.
-        new_value: float
-            The new value after the changes took place.
-        precision: int
-            The number of decimals that will be used to round the result.
-            
-    Returns:
-        float
-    """
-    # If the original value is 0, it is impossible to calculate the % change
-    if old_value == 0:
-        return 0
-    
-    # Init the change
-    change: float = 0.0
-        
-    # Handle the case in which the value experienced an increase
-    if new_value > old_value:
-        increase: float = new_value - old_value
-        change = (increase / old_value) * 100
-        
-    # Handle the case in which the value experienced a decrease
-    elif old_value > new_value:
-        decrease: float = old_value - new_value
-        change = -((decrease / old_value) * 100)
-        
-    # Finally, return the % change. Note that a value cannot experience a decrease larger than 100%
+    # Return the % change. Note that a value cannot experience a decrease larger than 100%
     return round(change if change >=-100 else -100, precision)
 ```
 
@@ -218,7 +187,9 @@ def from_milliseconds_to_date_string(ms: int) -> str:
     Returns:
         str
     """
-    return datetime.fromtimestamp(from_milliseconds_to_seconds(ms)).strftime("%d/%m/%Y, %H:%M:%S")
+    return datetime.fromtimestamp(
+      from_milliseconds_to_seconds(ms)
+    ).strftime("%d/%m/%Y, %H:%M:%S")
 ```
 
 ## Bitcoin Historic Candlesticks Retriever
@@ -267,8 +238,10 @@ def get_historic_candlesticks(
         df: DataFrame = DataFrame(ds[interval])
         
         # Initialize the real start and end timestamps based on its format
-        real_start: Union[int, str, None] = from_date_string_to_timestamp(start) if isinstance(start, str) else start
-        real_end: Union[int, str, None] = from_date_string_to_timestamp(end) if isinstance(end, str) else end
+        real_start: Union[int, str, None] 
+          = from_date_string_to_timestamp(start) if isinstance(start, str) else start
+        real_end: Union[int, str, None] 
+          = from_date_string_to_timestamp(end) if isinstance(end, str) else end
         
         # Handle the case where both values were provided
         if isinstance(real_start, (int, float)) and isinstance(real_end, (int, float)):
@@ -312,13 +285,20 @@ def plot_candlesticks(
             If enabled, the volume will be displayed at the bottom of the chart.
     """
     # Init the df
-    candlesticks_df = candlesticks.copy() if isinstance(candlesticks, DataFrame) else DataFrame(candlesticks)
+    candlesticks_df 
+      = candlesticks.copy() if isinstance(candlesticks, DataFrame) else DataFrame(candlesticks)
 
     # Rename the columns to match the requirements
     if display_volume:
-        candlesticks_df.rename(columns={"o": "Open", "h":"High", "l":"Low", "c": "Close", "v": "Volume"}, inplace=True)
+        candlesticks_df.rename(
+          columns={"o": "Open", "h":"High", "l":"Low", "c": "Close", "v": "Volume"}, 
+          inplace=True
+        )
     else:
-        candlesticks_df.rename(columns={"o": "Open", "h":"High", "l":"Low", "c": "Close"}, inplace=True)
+        candlesticks_df.rename(
+          columns={"o": "Open", "h":"High", "l":"Low", "c": "Close"}, 
+          inplace=True
+        )
 
     # Set the period start as the indexes
     candlesticks_df["time_period_start"] = to_datetime(candlesticks_df.ot, unit="ms")
